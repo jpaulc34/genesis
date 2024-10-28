@@ -26,7 +26,7 @@ Project Genesis - Ordering System/POS and Inventory Management (API) built with 
 
 - Ensure you have [Docker](https://www.docker.com/get-started) installed on your machine.
 - Install [Python 3.12.7](https://www.python.org/downloads/) or higher.
-- Install [Make 3.81](via homebrew) or higher.
+- Install [Make 3.81](https://formulae.brew.sh/formula/make) or higher.
 
 ### Running the Application
 
