@@ -1,7 +1,7 @@
 import os
 
 from bson import ObjectId
-from fastapi import Request
+from fastapi import Request, HTTPException, status
 from pymongo.collection import Collection
 from typing import List, Dict
 
@@ -15,8 +15,11 @@ class CategoryRepository:
         return [{"id": str(category["_id"]), "name": category["name"], "description": category["description"]} for category in categories]
 
     async def get_category_by_id(self, category_id: str) -> Dict:
-        category = self.collection.find_one({"_id": ObjectId(category_id)})
-        return {"id": str(category["_id"]), "name": category["name"], "description": category["description"]} if category else None
+        try:
+            category = self.collection.find_one({"_id": ObjectId(category_id)})
+            return {"id": str(category["_id"]), "name": category["name"], "description": category["description"]} if category else None
+        except Exception:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid category ID")
 
     async def create_category(self, category_data: Dict) -> str:
         result = self.collection.insert_one(category_data)
