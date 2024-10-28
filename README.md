@@ -29,6 +29,7 @@ Project Genesis - Ordering System/POS and Inventory Management (API) built with 
 
 ### Running the Application
 
-#### MAC
+#### Docker setup - MAC
 
-1. 
+```bash
+make build-up
