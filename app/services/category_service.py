@@ -6,32 +6,27 @@ from app.repositories.product_repository import ProductRepository
 from app.schemas.category_schema import CategoryCreate, CategoryResponse, CategoryWithProductsResponse
 
 class CategoryService:
-    # def __init__(self, request: Request):
-    #     # Inject the UserRepository, which uses the MongoDB collection from the app state
-    #     self.category_repository = CategoryRepository(request)
-    #     self.product_repository = ProductRepository(request)
-
     def __init__(self, request: Request, category_repo: CategoryRepository = None, product_repo: ProductRepository = None):
         self.category_repository = category_repo or CategoryRepository(request)
         self.product_repository = product_repo or ProductRepository(request)
 
     async def create_category(self, category_data: CategoryCreate) -> str:
-        return await self.category_repository.create_category(category_data.model_dump())
+        return await self.category_repository.insert_one(category_data.model_dump())
 
     async def get_all_categories(self) -> List[CategoryResponse]:
-        return await self.category_repository.get_all_categories()
+        return await self.category_repository.find_all()
 
     async def get_category_by_id(self, category_id: str) -> Optional[CategoryResponse]:
-        return await self.category_repository.get_category_by_id(category_id)
+        return await self.category_repository.find_by_id(category_id)
     
     async def update_category(self, category_id: str, update_data: Dict) -> CategoryResponse:
-        return await self.category_repository.update_category(category_id, update_data)
+        return await self.category_repository.update_one(category_id, update_data)
     
     async def delete_category(self, category_id: str):
-        return await self.category_repository.delete_category(category_id)
+        return await self.category_repository.delete_one(category_id)
     
     async def get_products_by_category_id(self, category_id: str) -> Optional[CategoryWithProductsResponse]:
-        category = await self.category_repository.get_category_by_id(category_id)
+        category = await self.category_repository.find_by_id(category_id)
         products = await self.product_repository.get_products_by_category_id(category_id)
 
         category["products"] = [{

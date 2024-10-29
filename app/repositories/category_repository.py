@@ -1,37 +1,15 @@
 import os
 
 from bson import ObjectId
-from fastapi import Request, HTTPException, status
-from pymongo.collection import Collection
+from fastapi import Request
 from typing import List, Dict
 
+from app.repositories.base_repository import BaseRepository
 
-class CategoryRepository:
+class CategoryRepository(BaseRepository):
     def __init__(self, request: Request):
-        self.collection: Collection = request.app.state.mongo_client[os.environ.get("DB")][os.environ.get("CATEGORY_COLLECTION")]  # MongoDB collection
-
-    async def get_all_categories(self) -> List[Dict]:
-        categories = self.collection.find()
-        return [{"id": str(category["_id"]), "name": category["name"], "description": category["description"]} for category in categories]
-
-    async def get_category_by_id(self, category_id: str) -> Dict:
-        try:
-            category = self.collection.find_one({"_id": ObjectId(category_id)})
-            return {"id": str(category["_id"]), "name": category["name"], "description": category["description"]} if category else None
-        except Exception:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid category ID")
-
-    async def create_category(self, category_data: Dict) -> str:
-        result = self.collection.insert_one(category_data)
-        return str(result.inserted_id)
-
-    async def update_category(self, category_id: str, update_data: Dict):
-        result = self.collection.find_one_and_update({"_id": ObjectId(category_id)}, {"$set": update_data}, return_document=True)
-        return {"id": str(result["_id"]), "name": result["name"], "description": result["description"]} if result else None
-
-    async def delete_category(self, category_id: str) -> bool:
-        result = self.collection.delete_one({"_id": ObjectId(category_id)})
-        return result.deleted_count > 0
+        collection = request.app.state.mongo_client[os.environ.get("DB")][os.environ.get("CATEGORY_COLLECTION")]  # MongoDB collection
+        super().__init__(collection)
     
     async def get_categories_by_ids(self, category_ids: List[str]) -> Dict[str, Dict]:
         # Convert category IDs to ObjectIds for MongoDB and retrieve all matching categories

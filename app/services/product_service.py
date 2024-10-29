@@ -12,14 +12,14 @@ class ProductService:
         self.category_repository = CategoryRepository(request)
 
     async def create_product(self, product_data: ProductCreate) -> str:
-        return await self.product_repository.create_product(product_data.model_dump())
+        return await self.product_repository.insert_one(product_data.model_dump())
 
     # async def get_all_products(self) -> List[ProductResponse]:
     #     return await self.product_repository.get_all_products()
 
     async def get_product_by_id(self, product_id: str) -> Optional[ProductResponse]:
-        product = await self.product_repository.get_product_by_id(product_id)
-        category = await self.category_repository.get_category_by_id(product["category_id"])
+        product = await self.product_repository.find_by_id(product_id)
+        category = await self.category_repository.find_by_id(product["category_id"])
         return {
                 **product,
                 "category": {
@@ -29,14 +29,14 @@ class ProductService:
                 }
             }
     
-    async def update_product(self, product_id: str, update_data: Dict) -> ProductResponse:
-        return await self.product_repository.update_product(product_id, update_data)
+    async def update_product(self, product_id: str, update_data: Dict):
+        return await self.product_repository.update_one(product_id, update_data)
     
     async def delete_product(self, product_id: str):
-        return await self.product_repository.delete_product(product_id)
+        return await self.product_repository.delete_one(product_id)
     
     async def get_all_products(self) -> List[ProductResponse]:
-        products = await self.product_repository.get_all_products()
+        products = await self.product_repository.find_all()
         
         # Collect unique category IDs from products
         category_ids = list({product["category_id"] for product in products})

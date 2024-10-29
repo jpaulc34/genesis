@@ -17,7 +17,7 @@ def get_category_service(request: Request) -> CategoryService:
 async def list_categories(service: CategoryService = Depends(get_category_service)):
     return await service.get_all_categories()
 
-@router.post("/")
+@router.post("/", response_model=CategoryResponse)
 async def create_category(category_data: CategoryCreate, service: CategoryService = Depends(get_category_service)):
     return await service.create_category(category_data)
 

@@ -21,7 +21,7 @@ async def list_users(service: UserService = Depends(get_user_service)) -> List[U
 async def create_user(user_data: UserCreate, service: UserService = Depends(get_user_service)):
     return await service.create_user(user_data)
 
-@router.get("/{id}")
+@router.get("/{user_id}")
 async def get_user( user_id: str, service: UserService = Depends(get_user_service)) -> UserResponse:
     return await service.get_user_by_id(user_id)
 
