@@ -1,9 +1,9 @@
 from fastapi import Request
 from typing import List, Optional, Dict
 
-from app.repositories.product_repository import ProductRepository
-from app.repositories.category_repository import CategoryRepository
-from app.schemas.product_schema import ProductCreate, ProductResponse
+from app.api.products.product_repository import ProductRepository
+from app.api.categories.category_repository import CategoryRepository
+from app.api.products.product_schema import ProductCreate, ProductResponse
 
 class ProductService:
     def __init__(self, request: Request):

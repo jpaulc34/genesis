@@ -1,7 +1,7 @@
 from pydantic import BaseModel, EmailStr
 from typing import List
 
-from app.schemas.category_schema import CategoryResponse
+from app.api.categories.category_schema import CategoryResponse
 
 class ProductCreate(BaseModel):
     name: str

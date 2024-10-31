@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Request, Depends
 from typing import List, Dict
 
-from app.schemas.user_schema import UserResponse, UserCreate
-from app.services.user_service import UserService
+from app.api.users.user_schema import UserResponse, UserCreate
+from app.api.users.user_service import UserService
 
 router = APIRouter(
         prefix="/users",

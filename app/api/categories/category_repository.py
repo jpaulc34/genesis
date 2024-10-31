@@ -4,7 +4,7 @@ from bson import ObjectId
 from fastapi import Request
 from typing import List, Dict
 
-from app.repositories.base_repository import BaseRepository
+from app.api.repositories.base_repository import BaseRepository
 
 class CategoryRepository(BaseRepository):
     def __init__(self, request: Request):

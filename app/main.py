@@ -1,5 +1,8 @@
 from fastapi import FastAPI
-from app.routers import user_router, category_router, product_router
+
+from app.api.categories import category_router
+from app.api.products import product_router
+from app.api.users import user_router
 from app.core.database import lifespan
 
 def create_app() -> FastAPI:

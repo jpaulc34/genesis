@@ -2,8 +2,8 @@ from fastapi import APIRouter, Request, Depends, HTTPException, status
 from typing import List, Dict
 
 from app.dependencies.service_dependency import get_product_service
-from app.schemas.product_schema import ProductCreate, ProductResponse
-from app.services.product_service import ProductService
+from app.api.products.product_schema import ProductCreate, ProductResponse
+from app.api.products.product_service import ProductService
 
 router = APIRouter(
         prefix="/products",

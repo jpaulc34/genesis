@@ -1,8 +1,6 @@
 from pydantic import BaseModel, EmailStr
 from typing import List
 
-from app.core.pymongo_object_id import PyObjectId
-
 class CategoryCreate(BaseModel):
     name: str
     description: str
