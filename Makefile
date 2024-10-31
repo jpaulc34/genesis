@@ -19,4 +19,4 @@ down:
 	docker-compose down
 
 test:
-	poetry run pytest
+	poetry run pytest tests/
