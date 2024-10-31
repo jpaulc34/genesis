@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Request, Depends, HTTPException, status
 from typing import List, Dict
 
-from app.dependencies.dependency import get_category_service
+from app.dependencies.service_dependency import get_category_service
 from app.schemas.category_schema import CategoryCreate, CategoryResponse, CategoryWithProductsResponse
 from app.services.category_service import CategoryService
 

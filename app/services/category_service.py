@@ -6,9 +6,10 @@ from app.repositories.product_repository import ProductRepository
 from app.schemas.category_schema import CategoryCreate, CategoryResponse, CategoryWithProductsResponse
 
 class CategoryService:
-    def __init__(self, request: Request, category_repo: CategoryRepository = None, product_repo: ProductRepository = None):
-        self.category_repository = category_repo or CategoryRepository(request)
-        self.product_repository = product_repo or ProductRepository(request)
+    def __init__(self, request: Request):
+        # Inject the UserRepository, which uses the MongoDB collection from the app state
+        self.product_repository = ProductRepository(request)
+        self.category_repository = CategoryRepository(request)
 
     async def create_category(self, category_data: CategoryCreate) -> str:
         return await self.category_repository.insert_one(category_data.model_dump())
