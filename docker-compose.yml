@@ -9,8 +9,9 @@ services:
       - MONGO_URI=mongodb://mongo:27017
       - DB=genesis
       - USER_COLLECTION=users
-      - PRODUCT_COLLECTION=products
       - CATEGORY_COLLECTION=categories
+      - PRODUCT_COLLECTION=products
+      - VARIANT_COLLECTION=variants
     depends_on:
       - mongo
 

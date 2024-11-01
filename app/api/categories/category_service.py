@@ -8,7 +8,6 @@ from app.api.products.product_repository import ProductRepository
 
 class CategoryService:
     def __init__(self, request: Request):
-        # Inject the UserRepository, which uses the MongoDB collection from the app state
         self.product_repository = ProductRepository(request)
         self.category_repository = CategoryRepository(request)
 

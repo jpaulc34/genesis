@@ -1,15 +1,16 @@
 from fastapi import Request
 from typing import List, Optional, Dict
 
-from app.api.products.product_repository import ProductRepository
 from app.api.categories.category_repository import CategoryRepository
+from app.api.products.product_repository import ProductRepository
+from app.api.variants.variant_repository import VariantRepository
 from app.api.products.product_schema import ProductCreate, ProductResponse
 
 class ProductService:
     def __init__(self, request: Request):
-        # Inject the UserRepository, which uses the MongoDB collection from the app state
         self.product_repository = ProductRepository(request)
         self.category_repository = CategoryRepository(request)
+        self.variant_repository = VariantRepository(request)
 
     async def create_product(self, product_data: ProductCreate) -> str:
         return await self.product_repository.insert_one(product_data.model_dump())
@@ -20,13 +21,15 @@ class ProductService:
     async def get_product_by_id(self, product_id: str) -> Optional[ProductResponse]:
         product = await self.product_repository.find_by_id(product_id)
         category = await self.category_repository.find_by_id(product["category_id"])
+        # variants = await self.variant_repository.get_variants_by_product_id(product_id)
         return {
                 **product,
                 "category": {
                     "id": str(category["id"]),
                     "name": category["name"],
                     "description": category["description"]
-                }
+                },
+                # "variants": variants
             }
     
     async def update_product(self, product_id: str, update_data: Dict):
