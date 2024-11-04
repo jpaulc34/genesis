@@ -2,7 +2,7 @@ from fastapi import APIRouter, Request, Depends, HTTPException, status
 from typing import List, Dict
 
 from app.dependencies.service_dependency import get_product_service
-from app.api.products.product_schema import ProductCreate, ProductResponse
+from app.api.products.product_schema import ProductCreate, ProductUpdate, ProductResponse
 from app.api.products.product_service import ProductService
 
 router = APIRouter(
@@ -27,7 +27,7 @@ async def get_product( product_id: str, service: ProductService = Depends()):
     return product
 
 @router.put("/{product_id}")
-async def update_product( product_id: str, product_data: Dict, service: ProductService = Depends()):
+async def update_product( product_id: str, product_data: ProductUpdate, service: ProductService = Depends()):
     updated = await service.update_product(product_id, product_data)
     if not updated:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Product not found")

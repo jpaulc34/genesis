@@ -8,6 +8,19 @@ class ProductCreate(BaseModel):
     name: str
     description: str
     handle: str
+    sku: str
+    quantity: int
+    cost_price: float
+    selling_price: float
+    category_id: str
+
+class ProductUpdate(BaseModel):
+    name: str
+    description: str
+    handle: str
+    sku: str
+    cost_price: float
+    selling_price: float
     category_id: str
 
 class ProductResponse(BaseModel):
@@ -15,6 +28,10 @@ class ProductResponse(BaseModel):
     name: str
     description: str
     handle: str
+    sku: str
+    quantity: int
+    cost_price: float
+    selling_price: float
     category: CategoryResponse
     # variants: List[VariantResponse]
 
