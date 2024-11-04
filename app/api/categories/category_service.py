@@ -3,8 +3,8 @@ from typing import List, Optional, Dict
 
 from app.api.categories.category_repository import CategoryRepository
 from app.api.categories.category_schema import CategoryCreate, CategoryResponse, CategoryWithProductsResponse
-
 from app.api.products.product_repository import ProductRepository
+from app.api.serializers import serialize_product
 
 class CategoryService:
     def __init__(self, request: Request):
@@ -30,11 +30,5 @@ class CategoryService:
         category = await self.category_repository.find_by_id(category_id)
         products = await self.product_repository.get_products_by_category_id(category_id)
 
-        category["products"] = [{
-            "id":product["id"],
-            "name":product["name"],
-            "description": product["description"],
-            "handle": product["handle"],
-        } for product in products]
-
+        category["products"] = serialize_product(products)
         return category
