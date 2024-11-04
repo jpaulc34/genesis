@@ -2,6 +2,7 @@ from fastapi import Request
 from typing import List, Optional, Dict
 
 from app.api.categories.category_repository import CategoryRepository
+from app.api.inventories.inventory_schema import InventoryUpdate
 from app.api.products.product_repository import ProductRepository
 from app.api.products.product_schema import ProductCreate, ProductUpdate, ProductResponse
 from app.api.serializers import serialize_category

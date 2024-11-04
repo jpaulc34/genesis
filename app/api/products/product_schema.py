@@ -1,15 +1,14 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, PositiveInt
 from typing import List
 
 from app.api.categories.category_schema import CategoryResponse
-from app.api.variants.variant_schema import VariantResponse
 
 class ProductCreate(BaseModel):
     name: str
     description: str
     handle: str
     sku: str
-    quantity: int
+    quantity: PositiveInt
     cost_price: float
     selling_price: float
     category_id: str
@@ -29,11 +28,7 @@ class ProductResponse(BaseModel):
     description: str
     handle: str
     sku: str
-    quantity: int
+    quantity: PositiveInt
     cost_price: float
     selling_price: float
     category: CategoryResponse
-    # variants: List[VariantResponse]
-
-    # class ConfigDict:
-    #     from_attributes = True
