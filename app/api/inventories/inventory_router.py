@@ -1,15 +1,14 @@
 from fastapi import APIRouter, Request, Depends, HTTPException, status
 from typing import List, Dict
 
-from app.dependencies.service_dependency import get_product_service
+from app.dependencies.service_dependency import get_inventory_service
 from app.api.inventories.inventory_schema import InventoryUpdate
-# from app.api.products.product_service import ProductService
 from app.api.inventories.inventory_service import InventoryService
 
 router = APIRouter(
         prefix="/products",
         tags= ["Inventory"],
-        dependencies= [Depends(get_product_service)]
+        dependencies= [Depends(get_inventory_service)]
     )
 
 @router.get("/{product_id}/stock")
